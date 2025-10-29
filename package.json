@@ -13,7 +13,7 @@
     "dev:secure": "concurrently \"npm run dev:back\" \"npm run dev:admin\" \"npm run dev:kiosk\"",
     "build": "npm run build:front && npm run build:admin && npm run build:kiosk",
     "build:front": "cd app/front && npm run build",
-    "build:admin": "cd app/admin && npm run build", 
+    "build:admin": "cd app/admin && npm run build",
     "build:kiosk": "cd app/kiosk && npm run build",
     "start": "cd app/back && npm start",
     "db:sync": "cd app/back && npm run db:sync"
@@ -31,5 +31,8 @@
     "monorepo"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "vercel": "^48.6.7"
+  }
 }

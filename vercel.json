@@ -2,18 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "app/back/src/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "app/admin/package.json",
-      "use": "@vercel/static-build",
+      "src": "back/src/index.js",
+      "use": "@vercel/node",
       "config": {
-        "distDir": "dist"
+        "maxDuration": 30
       }
     },
     {
-      "src": "app/kiosk/package.json", 
+      "src": "front/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
@@ -23,37 +19,25 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "app/back/src/index.js"
+      "dest": "back/src/index.js"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "app/admin/dist/$1"
+      "src": "/assets/(.*)",
+      "headers": {
+        "cache-control": "max-age=31536000, immutable"
+      },
+      "dest": "front/dist/assets/$1"
     },
     {
-      "src": "/kiosk/(.*)",
-      "dest": "app/kiosk/dist/$1"
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "front/dist/$1"
     },
     {
-      "src": "/admin",
-      "dest": "app/admin/dist/index.html"
-    },
-    {
-      "src": "/kiosk",
-      "dest": "app/kiosk/dist/index.html"
-    },
-    {
-      "src": "/",
-      "dest": "app/admin/dist/index.html"
+      "src": "/(.*)",
+      "dest": "front/dist/index.html"
     }
   ],
   "env": {
-    "DATABASE_URL": "@database_url",
-    "JWT_SECRET": "@jwt_secret",
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "app/back/src/index.js": {
-      "maxDuration": 30
-    }
   }
 }
