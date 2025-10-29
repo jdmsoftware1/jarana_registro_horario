@@ -7,8 +7,12 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
+    "build": "echo 'Backend build complete'",
     "db:sync": "node src/database/sync.js",
-    "db:setup": "node setup-db.js"
+    "db:setup": "node setup-db.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.1",
