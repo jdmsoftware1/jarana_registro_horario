@@ -1,0 +1,35 @@
+{
+  "name": "registro-horario-monorepo",
+  "version": "1.0.0",
+  "description": "Sistema de registro horario con Node.js + Express + React",
+  "private": true,
+  "scripts": {
+    "install": "cd app/back && npm install && cd ../front && npm install && cd ../admin && npm install && cd ../kiosk && npm install",
+    "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\" \"npm run dev:admin\" \"npm run dev:kiosk\"",
+    "dev:back": "cd app/back && npm run dev",
+    "dev:front": "cd app/front && npm run dev",
+    "dev:admin": "cd app/admin && npm run dev",
+    "dev:kiosk": "cd app/kiosk && npm run dev",
+    "dev:secure": "concurrently \"npm run dev:back\" \"npm run dev:admin\" \"npm run dev:kiosk\"",
+    "build": "npm run build:front && npm run build:admin && npm run build:kiosk",
+    "build:front": "cd app/front && npm run build",
+    "build:admin": "cd app/admin && npm run build", 
+    "build:kiosk": "cd app/kiosk && npm run build",
+    "start": "cd app/back && npm start",
+    "db:sync": "cd app/back && npm run db:sync"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "time-tracking",
+    "nodejs",
+    "react",
+    "express",
+    "sequelize",
+    "jwt",
+    "monorepo"
+  ],
+  "author": "",
+  "license": "MIT"
+}

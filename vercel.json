@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app/back/src/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "app/admin/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "app/kiosk/package.json", 
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "app/back/src/index.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "app/admin/dist/$1"
+    },
+    {
+      "src": "/kiosk/(.*)",
+      "dest": "app/kiosk/dist/$1"
+    },
+    {
+      "src": "/admin",
+      "dest": "app/admin/dist/index.html"
+    },
+    {
+      "src": "/kiosk",
+      "dest": "app/kiosk/dist/index.html"
+    },
+    {
+      "src": "/",
+      "dest": "app/admin/dist/index.html"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "JWT_SECRET": "@jwt_secret",
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "app/back/src/index.js": {
+      "maxDuration": 30
+    }
+  }
+}
