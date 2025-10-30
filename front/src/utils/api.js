@@ -1,6 +1,12 @@
 const API_BASE_URL = import.meta.env.PROD 
   ? 'https://jarana-backend.jdmsoftware1.workers.dev/api'  // Cloudflare Workers
-  : '/api'; // Desarrollo local
+  : 'http://localhost:3000/api'; // Desarrollo local
+
+// Service Token desde variables de entorno (seguro)
+const SERVICE_TOKEN = {
+  clientId: import.meta.env.VITE_CF_ACCESS_CLIENT_ID,
+  clientSecret: import.meta.env.VITE_CF_ACCESS_CLIENT_SECRET
+};
 
 class ApiError extends Error {
   constructor(message, status, data) {
@@ -12,8 +18,21 @@ class ApiError extends Error {
 }
 
 const getAuthHeaders = () => {
+  const headers = {};
+  
+  // JWT Token para desarrollo local
   const token = sessionStorage.getItem('token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  
+  // Service Token para producción (Cloudflare)
+  if (SERVICE_TOKEN.clientId && SERVICE_TOKEN.clientSecret) {
+    headers['CF-Access-Client-Id'] = SERVICE_TOKEN.clientId;
+    headers['CF-Access-Client-Secret'] = SERVICE_TOKEN.clientSecret;
+  }
+  
+  return headers;
 };
 
 const handleResponse = async (response) => {
