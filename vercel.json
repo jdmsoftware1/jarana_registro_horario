@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "back/src/index.js",
+      "src": "back/package.json",
       "use": "@vercel/node",
       "config": {
         "maxDuration": 30
