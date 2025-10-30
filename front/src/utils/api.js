@@ -1,4 +1,6 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = import.meta.env.PROD 
+  ? 'https://jarana-backend.jdmsoftware1.workers.dev/api'  // Cloudflare Workers
+  : '/api'; // Desarrollo local
 
 class ApiError extends Error {
   constructor(message, status, data) {

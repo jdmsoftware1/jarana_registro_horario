@@ -1,0 +1,14 @@
+name = "jarana-backend"
+main = "src/worker.js"
+compatibility_date = "2024-10-30"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "jarana-backend-prod"
+
+[env.staging]
+name = "jarana-backend-staging"
+
+# Variables de entorno (configurar en Cloudflare Dashboard)
+[vars]
+NODE_ENV = "production"

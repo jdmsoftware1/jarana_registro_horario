@@ -12,7 +12,11 @@
     "db:setup": "node setup-db.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy",
+    "cf:deploy:staging": "wrangler deploy --env staging",
+    "cf:deploy:prod": "wrangler deploy --env production"
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.1",
@@ -33,7 +37,8 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "wrangler": "^3.0.0"
   },
   "keywords": [
     "time-tracking",
