@@ -39,7 +39,9 @@ const corsOptions = {
     /^https:\/\/admin\.jarana\./,                        // Production admin
     /^https:\/\/kiosk\.jarana\./,                        // Production kiosk
     /^https:\/\/.*-admin\.netlify\.app$/,                // Netlify admin
-    /^https:\/\/.*-kiosk\.netlify\.app$/                 // Netlify kiosk
+    /^https:\/\/.*-kiosk\.netlify\.app$/,                // Netlify kiosk
+    /^https:\/\/.*\.vercel\.app$/,                       // Vercel deployments
+    true // Allow same origin (for monorepo deployment)
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -52,6 +54,30 @@ app.use(express.urlencoded({ extended: true }));
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// API Health check
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    database: 'connected'
+  });
+});
+
+// Debug endpoint
+app.get('/api/debug', (req, res) => {
+  res.json({
+    status: 'DEBUG',
+    environment: process.env.NODE_ENV,
+    port: process.env.PORT,
+    database_url: process.env.DATABASE_URL ? 'configured' : 'missing',
+    jwt_secret: process.env.JWT_SECRET ? 'configured' : 'missing',
+    timestamp: new Date().toISOString(),
+    headers: req.headers,
+    url: req.url
+  });
 });
 
 // Routes
